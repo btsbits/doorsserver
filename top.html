@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+    <html manifest="/cache.manifest">
+<!--<html>-->
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+{
+    .th
+    {
+        height: :15px;
+        width: 15px;
+    }
+html, .ui-mobile, .ui-mobile body {
+    	height: 945px;
+	}
+	.ui-mobile, .ui-mobile .ui-page {
+    	min-height: 945px;
+	}
+	.ui-content{
+		padding:10px 15px 0px 15px;
+	}
+	.ui-content .ui-listview {
+    margin: -15px -15px 0px -15px;
+}
+</style>
+<script type="text/javascript">
+    function toggle_garage(pin)
+    {
+       $.ajax('/click/'+pin);
+    }
+    function set_status(data,xstatus)
+    {
+        console.log(xstatus);
+        $('#ram').html(data.ram);
+        $.each(data.state, function(pin,value) {
+            if (value) {
+                $('#'+pin+'-stat').html('closed');
+                $('#'+pin+'-img').attr('src',"closeddoor.jpg");
+            }
+            else
+            {
+                $('#'+pin+'-stat').html('open');
+                $('#'+pin+'-img').attr('src',"opendoor.jpg");
+            }
+        })
+        $.each(data.time, function(pin,value) {
+            $('#time'+pin).html(value);
+        });
+        $.each(data.gstate, function(pin,value) {
+            if (value===1)
+            {
+                $('#'+pin+'-stat').html('closed');
+                $('#'+pin+'-img').attr('src',"closedgaragedoor.jpg");
+            }
+            else if (value===2)
+            {
+                $('#'+pin+'-stat').html('partialy open');
+                $('#'+pin+'-img').attr('src',"partopengaragedoor.jpg");
+            }
+            else
+            {
+                $('#'+pin+'-stat').html('open');
+                $('#'+pin+'-img').attr('src',"opengaragedoor.jpg");
+            }
+        })
+    }
+    </script>
+    <title>Home Remote</title>
+</head>
+
+<body>
+    <div data-role="page" id="status">
+        <div role="main" class="ui-content">
+            <div data-role="content">
+                <ul data-role="listview">

@@ -1,0 +1,47 @@
+{
+    "debug":0,
+    "____notes____":
+    {
+        "1":"This file must be valid JSON!  Do not remove the required keys (doors, garageopen, garageclose, warnings).",
+        "2":"In 'warnmessage' %d = door name, %t = warntime in minutes (as a float followed by the string ' minutes' so if warntime is 20, then %t = '0.33333 minutes')",
+        "3":"warntime is expressed in seconds",
+        "4":"if garages have sensors when fully opened and fully closed, include them in 'garageopen' and 'garageclose'.  if there is only one sensor and detects a fully closed door, leave both as an empty list [].",
+        "5":"emaillogin defines how to login to a smtp mail server to send messages. this can be an empty dictionary {} if warnings is an empty list []",
+        "6":"gmail requires say_ehlo and starttls to be 1. if your server does not require one or both, set to 0 appropriatly",
+        "7":"keys beyond emaillogin are not yet implemented, but will be used for the python based monitor, and the php/javascript web interface."
+        },
+    "doors" :
+    {
+        "0":"front",
+        "1":"basement stairs",
+        "-2":"kitchen",
+        "3":"garage",
+        "4":"garage",
+        "5":"interior garage"
+    },
+    "note":"negative pin numbers are disabled.  this might be denoted by a separate list in the future.",
+    "garageopen":[4],
+    "garageclose":[3],
+    "warnings":[0,3,5],
+    "warntime":600,
+    "warnemail":["user@example.com","someone@a.domain.com"],
+    "warnmessage":"%d has been open for %t! \n %u   ",
+    "emaillogin":
+    {
+        "email":"sender@gmail.com",
+        "userid":"sender@gmail.com",
+        "password":"secret password",
+        "server":"smtp.gmail.com",
+        "port":587,
+        "say_ehlo":1,
+        "starttls":1
+    },
+    "domain":"pi.btsbits.com",
+    "xtoken":"alkjfakljfkasdjfkjla",
+    "note":"remove the 'x' from xtoken and change token to a long random string of url safe characters or a new one will generated at start up.",
+    "garagebutton":[],
+    "garagerelay":[0],
+    "doorbells":{},
+    "doorbellrelay":[1],
+    "doorbellemail":["user@example.com","someone@a.domain.com"]
+}

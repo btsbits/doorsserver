@@ -1,0 +1,17 @@
+ </ul>
+            </div>
+        </div>
+    
+    <div id="ram"></div>
+    </div>
+    <script type="text/javascript">
+        function ajax_fail(args) {
+            $('.status').each(function(){$(this).html('--error--')}) /*<img class="th" style="height: :70px; width: 70px;" src="/question.jpg"/ >*/
+            $("[id$=-img]").each(function(){$(this).attr('src','/question.jpg')})
+        }
+        setInterval(function(){$.ajax('/alldoors',{
+            'success':function(data,textStatus){set_status($.parseJSON(data));},
+            'error':function(data,xstatus){console.log(xstatus);ajax_fail()}});},3000);
+    </script>
+</body>
+</html>
