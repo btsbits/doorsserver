@@ -36,7 +36,7 @@
         "say_ehlo":1,
         "starttls":1
     },
-    "domain":"pi.btsbits.com",
+    "domain":"mypi.dyna-dns-provider.com",
     "xtoken":"alkjfakljfkasdjfkjla",
     "note":"remove the 'x' from xtoken and change token to a long random string of url safe characters or a new one will generated at start up.",
     "garagebutton":[],
