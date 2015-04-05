@@ -21,6 +21,8 @@ I started this project as a means of checking on the status of and controling my
  - Internet connection to the RPi (a USB WiFi adapter will required on model 'A's but an Ethernet cable can be used for all 'B' models.  Other USB adapters for other types of connections may also be available)
  - at least one sensor/switch that can be wired to the Piface Digital
 # Setup #
+ - connect door sensor switches to the piface digital input terminals with pin 8 as a common connector for all switches.
+ - connect the common and NO pins of piface digital a relay to the wires of the garage door opener button.
  - Install Raspbian OS to SDCard according to the distribution's instructions (if pre-installed, skip this step)
  - connect to the RPi using a USB keyboard and TV/Monitor 
 or:
@@ -67,7 +69,7 @@ As a daemon
 - edit /etc/rc.local `sudo nano /etc/rc.local`
 - add a line similar to this at the end:
 
- `setsid python3 doorsserver065.py -div -l /var/log/doors65.insecure -p 8888 -f /home/pi/testing.doors.json >>/var/log/doorserver.insecure.rc.log 2>&1 < /dev/null &`
+ `setsid python3 doorsserver065.py -div -l /var/log/doors65.insecure -p 8888 -f /home/pi/testing.doors.json >>/var/log/doorserver.insecure.rc.log 2>& 1 < /dev/null &`
     
 
 To break that down:
@@ -81,5 +83,17 @@ To break that down:
 	- /var/log/doors.65.insecure.log
 	- /var/log/doors.65.insecure.server
 	- /var/log/doors.65.insecure.states
--  `-p 8888` override the default port for the web server and use 8888 instead
-- 
+
+ -  `-p 8888` override the default port for the web server and use 8888 instead
+ - `-f /home/pi/testing.doors.json` use a different config file located at home/pi/testing.doors.json
+ - `>>/var/log/doorserver.insecure.rc.log` if this initial command has any output (it shouldn't since -d was used) add it to the file /var/log/doorserver.insecure.rc.log
+ - `2>& 1 < /dev/null &` ignore all stderr and stdin 
+
+The last 2 points are import to ensure the program is run in the background and does not cause problems with anything else in the rc.local script.
+
+Web Interface
+-------
+
+To use the web interface, you will need the token specified in the config file's "token" key, or from the console or .log file (must use -v option).  The url is https://ip.of.rpi/?t=tOkeNfrOmconIg or if -i option is used, omit the 's' from https://.  If the main status page works correctly, a cookie is set in the browser and the query portion of the url (part after and including the '?') can be omitted. This cookie is required for the javascript to update door status, trigger garage doors, view logs, and view/edit config (not fully implemented).
+
+If a pin for a garage door is listed in 'garageclose' and a relay (0 or 1) is listed in 'garagerelay' in the config file, you can click on the garage icon to briefly trigger the relay to open or close the garage door.
