@@ -20,7 +20,9 @@ I started this project as a means of checking on the status of and controling my
  - SD card with Debian based OS for Raspberry Pi (I am using Raspbian, but might work with others.)
  - Internet connection to the RPi (a USB WiFi adapter will required on model 'A's but an Ethernet cable can be used for all 'B' models.  Other USB adapters for other types of connections may also be available)
  - at least one sensor/switch that can be wired to the Piface Digital
+
 # Setup #
+
  - connect door sensor switches to the piface digital input terminals with pin 8 as a common connector for all switches.
  - connect the common and NO pins of piface digital a relay to the wires of the garage door opener button.
  - Install Raspbian OS to SDCard according to the distribution's instructions (if pre-installed, skip this step)
@@ -31,6 +33,7 @@ or:
  - *(There are some steps required to enable SPI for PIface Digital to work on newer versions of Raspbian. I will try to update when i remember what they are. If you find the instuctions somewhere, please let me know or submit a pull request.)*
  - Create a new folder `mkdir /home/pi/doorsserver/` and put doorsserver files in it.
  - Edit 'doors.json' and make sure that proper JSON is used or a fatal error will be generated. Do not remove any top level keys unless specified in the notes keys.
+
 # Usage #
 
 For testing/debugging
