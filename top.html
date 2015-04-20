@@ -7,6 +7,10 @@
 <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <style>
 {
+	.pulse
+	{
+		opacity: 0.0;
+	}
     .th
     {
         height: :15px;
@@ -32,6 +36,7 @@ html, .ui-mobile, .ui-mobile body {
     }
     function set_status(data,xstatus)
     {
+		$('#pulse').fadeIn(1);
         console.log(xstatus);
         $('#ram').html(data.ram);
         $.each(data.state, function(pin,value) {
@@ -65,9 +70,12 @@ html, .ui-mobile, .ui-mobile body {
                 $('#'+pin+'-img').attr('src',"opengaragedoor.jpg");
             }
         })
+		$('#pulse').fadeOut(500);
     }
     </script>
     <title>Home Remote</title>
+	<meta name="viewport" content="width=300, initial-scale=0.7, maximum-scale=1">
+
 </head>
 
 <body>

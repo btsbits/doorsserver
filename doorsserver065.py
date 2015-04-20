@@ -26,19 +26,19 @@ warnat={}
 opensince={}
 verbose=0
 isdaemon=0
-debug=False
+debug=True
 session_data={}
 filebase=os.path.basename(__file__)
 #dlf="/var/log/doors4.log"
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-v','--verbose',help="verbose logging/output",action='store_true')
-parser.add_argument('-f','--configfile', help='specify a JSON formated file to retrive configuration from',default ='/home/pi/doors.json')
+parser.add_argument('-f','--configfile', help='specify a JSON formated file to retrive configuration from. (default is: doors.json)',default ='doors.json')
 parser.add_argument('-d','--daemon',help='direct errors and output to log files', action='store_true')
 parser.add_argument('-i','--insecure',help='do not use ssl', action='store_true', default=False)
 parser.add_argument('-n','--newtoken',help='generate a new token', action='store_true', default=False)
-parser.add_argument('-p','--port',help='specify what port to listen on for http requests', type=int, default=8880 )
-parser.add_argument('-l','--logfile', help='specify the log path and file name prefix',default ='/var/log/'+filebase)
+parser.add_argument('-p','--port',help='specify what port to listen on for http requests. (default is: 8880', type=int, default=8880 )
+parser.add_argument('-l','--logfile', help='specify the log path and file name prefix. (default is: /var/log/'+filebase+')',default ='/var/log/'+filebase)
 args=parser.parse_args()
 try:
     doorstates=open(args.logfile+".states","r")
@@ -322,7 +322,7 @@ class myHandler(http.server.SimpleHTTPRequestHandler):
                         else:
                             if debug:print (opensince)
                             self.wfile.write(bytes('<li>\n                        <img  id="'+pin+'-img" src="'+img+'" />\n                        <h3>'+doorsjson['doors'][pin]+' Door is <span class="status" id="'+pin+'-stat">'+openclosestate+'</span></h3>\n                        <p id="time'+pin+'">since '+time.asctime( time.localtime(opensince[int(pin)]))+'</p>\n                    </li>',"UTF-8"))
-                self.wfile.write(bytes(__file__+(open('bot.html').read()+str(opensince)),"UTF-8"))
+                self.wfile.write(bytes(__file__+(open('bottom.html').read()+str(opensince)),"UTF-8"))
                 sendReply=False
                 """
                     end of default page (for authorized users)
@@ -350,7 +350,7 @@ class myHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type','text/html')
                 self.end_headers()
-                outputjson={'state':{},'gstate':{},'time':{}, 'ram':str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1000)+'k ram'}
+                outputjson={'state':{},'gstate':{},'time':{}, 'ram':str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1000)+'k ram</p>Updated at '+time.asctime( time.localtime(time.time()))}
                 for pin in doorsjson['doors']:
                     if (int(pin)<0) or (int(pin) in doorsjson['garageopen']):
                         pass
@@ -541,7 +541,7 @@ class myHandler(http.server.SimpleHTTPRequestHandler):
         
         if sendReply == True:  
                 #Open the static file requested and send it
-                f = open('/home/pi/python.d' + self.path, mode='rb')
+                f = open(os.getcwd()+self.path, mode='rb')
                 if debug:print (f)
                 data=f.read()
                 if debug:print (len(data))
