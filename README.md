@@ -79,7 +79,7 @@ To break that down:
 
  - `-div` enables 3 options:
 	 - daemon: log everything instead of sending it as console output
-	 - insecure: don't use https (ssl seems buggy right now, especially with ports that are forwarded on a home router.)
+	 - insecure: don't use https (not recomended for Internet accessable front end)
 	 - verbose: gives more information, especially when initializing. This helps track problems and please use verbose since this is alpha software (under development and not ready for secure/production use)
  - `-l /var/log/doors65.insecure` log file will be:
 	- /var/log/doors.65.insecure.err
